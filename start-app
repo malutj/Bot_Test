@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+appdir="bot_workspace"
+
+cd /home/$NITROUS_USERNAME/code/$appdir
+source bin/activate
+echo "Running app: 0.0.0.0:$NITROUS_PREVIEW_PORT"
+gunicorn bot_project.wsgi --bind 0.0.0.0:$NITROUS_PREVIEW_PORT
