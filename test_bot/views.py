@@ -61,7 +61,7 @@ class facebook_bot_view ( generic.View ):
 
   # Returns a Facebook user's firstname
   def GetUserFirstName ( userid ):
-    response = requests.get ( 'https://graph.facebook.com/v2.6/' + message['sender']['id'] + '?access_token=' + appkey.appkey )
+    response = requests.get ( 'https://graph.facebook.com/v2.6/' + userid + '?access_token=' + appkey.appkey )
     user_profile = response.json()
     if 'first_name' not in user_profile:
       return "buddy"
