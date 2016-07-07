@@ -28,7 +28,15 @@ def messageIsGreeting ( message ):
   return False
 
 class facebook_bot_view ( generic.View ):
-
+  # Returns a Facebook user's firstname
+  def GetUserFirstName ( userid ):
+    response = requests.get ( 'https://graph.facebook.com/v2.6/' + message['sender']['id'] + '?access_token=' + appkey.appkey )
+    user_profile = response.json()
+    if 'first_name' not in user_profile:
+      return "buddy"
+    else:
+      return user_profile['first_name']
+    
   @method_decorator(csrf_exempt)
   def dispatch(self, request, *args, **kwargs):
     return generic.View.dispatch(self, request, *args, **kwargs)
@@ -58,11 +66,3 @@ class facebook_bot_view ( generic.View ):
             post_facebook_message ( user_id, message['message']['text'] )
 
     return HttpResponse()
-
-  # Returns a Facebook user's firstname
-  def GetUserFirstName ( userid ):
-    user_profile = requests.get ( 'https://graph.facebook.com/v2.6/' + message['sender']['id'] + '?access_token=' + appkey.appkey ).json()
-    if 'first_name' not in user_profile:
-      return "buddy"
-    else:
-      return user_profile['first_name']
