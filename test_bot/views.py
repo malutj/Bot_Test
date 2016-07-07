@@ -58,7 +58,7 @@ class facebook_bot_view ( generic.View ):
             post_facebook_message ( user_id, message['message']['text'] )
 
     return HttpResponse()
-  
+
   # Returns a Facebook user's firstname
   def GetUserFirstName ( userid ):
     response = requests.get ( 'https://graph.facebook.com/v2.6/' + message['sender']['id'] + '?access_token=' + appkey.appkey )
