@@ -16,9 +16,9 @@ def index ( request ):
 def about ( request ):
   return HttpResponse("<h1>About Us</h1>")
 
-def post_facebook_message(fbid, recevied_message):
+def post_facebook_message(fbid, received_message):
   post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + appkey.appkey
-  response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":recevied_message}})
+  response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":received_message}})
   status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
   pprint(status.json())
 
@@ -52,10 +52,10 @@ class facebook_bot_view ( generic.View ):
         if 'message' in message:
           # Print the message to the terminal
           if ( messageIsGreeting ( message ) ):
-            user_profile = requests.get ( 'https://graph.facebook.com/v2.6/' + message['sender']['id'] + '?access_token' + appkey.appkey )
+            user_profile = requests.get ( 'https://graph.facebook.com/v2.6/' + message['sender']['id'] + '?access_token=' + appkey.appkey )
             pprint(user_profile.json())
             post_facebook_message ( message['sender']['id'], "Hi there, " + user_profile.json()['first_name'] )
           else:
-            post_facebook_message(message['sender']['id'], message['message']['text'])
+            post_facebook_message ( message['sender']['id'], message['message']['text'] )
     return HttpResponse()
 
