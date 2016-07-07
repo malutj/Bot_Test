@@ -50,12 +50,19 @@ class facebook_bot_view ( generic.View ):
         # Check to make sure the received call is a message call
         # This might be delivery, optin, postback for other events
         if 'message' in message:
+          user_id = message['sender']['id']
           # Print the message to the terminal
           if ( messageIsGreeting ( message ) ):
-            user_profile = requests.get ( 'https://graph.facebook.com/v2.6/' + message['sender']['id'] + '?access_token=' + appkey.appkey )
-            pprint(user_profile.json())
-            post_facebook_message ( message['sender']['id'], "Hi there, " + user_profile.json()['first_name'] )
+            post_facebook_message ( user_id, "Hi there, " + GetUserFirstName ( user_id ) )
           else:
-            post_facebook_message ( message['sender']['id'], message['message']['text'] )
+            post_facebook_message ( user_id, message['message']['text'] )
+
     return HttpResponse()
 
+  # Returns a Facebook user's firstname
+  def GetUserFirstName ( userid ):
+    user_profile = requests.get ( 'https://graph.facebook.com/v2.6/' + message['sender']['id'] + '?access_token=' + appkey.appkey ).json()
+    if 'first_name' not in user_profile:
+      return "buddy"
+    else:
+      return user_profile['first_name']
