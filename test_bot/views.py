@@ -20,7 +20,6 @@ def post_facebook_message(fbid, received_message):
   post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + appkey.appkey
   response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":received_message}})
   status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
-  pprint(status.json())
 
 def messageIsGreeting ( message ):
   if "Hello" in message['message']['text'] or "hello" in message['message']['text']:
@@ -66,7 +65,7 @@ class facebook_bot_view ( generic.View ):
   def GetUserFirstName ( userid ):
     response = requests.get ( 'https://graph.facebook.com/v2.6/' + userid + '?access_token=' + appkey.appkey )
     user_profile = response.json()
-    print user_profile
+
     if 'first_name' not in user_profile:
       return "buddy"
     else:
