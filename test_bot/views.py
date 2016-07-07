@@ -47,6 +47,8 @@ class facebook_bot_view ( generic.View ):
     # multiple messages in a single call during high load
     for entry in incoming_message['entry']:
       for message in entry['messaging']:
+        print "MESSAGE RECEIVED:"
+        print message
         # Check to make sure the received call is a message call
         # This might be delivery, optin, postback for other events
         if 'message' in message:
