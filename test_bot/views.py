@@ -53,7 +53,8 @@ class facebook_bot_view ( generic.View ):
           user_id = message['sender']['id']
           # Print the message to the terminal
           if ( messageIsGreeting ( message ) ):
-            post_facebook_message ( user_id, "Hi there, " + self.GetUserFirstName ( user_id ) )
+            response = requests.get ( 'https://graph.facebook.com/v2.6/' + user_id + '?access_token=' + appkey.appkey )
+            post_facebook_message ( user_id, "Hi there, " + response.json()['first_name'] )
           else:
             post_facebook_message ( user_id, message['message']['text'] )
 
