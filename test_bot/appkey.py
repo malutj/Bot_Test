@@ -1,0 +1,10 @@
+import os
+
+server = os.environ['SERVER']
+appkey = 0
+
+if (server == 'HEROKU'):
+    appkey = 'EAARBuHDd8IYBAPVnZBaXX6kXbvwhHAADuMLXgZA5CXLMkNPvK5s0KzkzBljfFfUTut5K5DQeTKZBdEEY5bltZA601o5IrxUbMYL1xlBaLw9toCf329TPNzcX9bdi6bpfowtQzeiYx5pXqm6amtHzfYNHGZAJR3IAGJPXZAfka7ZCQZDZD'
+else:
+    appkey = 'EAAY8WTjoQGkBAEQDhKm0dSO1ZAsKIZApTGZAJaxsZCoRO41ATCyrNMbsLQuyMNNRXNJg34HZAkZCdtCRbSIXVdF6fdzqQazKCGuf3wrn0LUhW8wTIXTaMeeQNfQrltaeIXjirZAZC0ydZBH7ZADZAo37u7Ec2TUC2M3tbl5cvP5f1rZApwZDZD'
+

@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from pprint import pprint
 import requests
+import appkey
 
 # Create your views here.
 def index ( request ):
@@ -16,7 +17,7 @@ def about ( request ):
   return HttpResponse("<h1>About Us</h1>")
 
 def post_facebook_message(fbid, recevied_message):
-  post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=EAARBuHDd8IYBAEkyWKHpQCJDc3HCtJTnevmnxmrgXkVDDkDKIt88W3XZBT39QWEgaqw9QJao61ZCcCB5KkwBE2FZCPzZBY9FLppexOZAvlY8CRFAVa4wPg5ZBTZAdFEwYKoSLJ0D9jY3h7OjuGjzW2wkq9lyy0LLhdNV8dSsTdhYgZDZD'
+  post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + appkey.appkey
   response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":recevied_message}})
   status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
   pprint(status.json())
@@ -51,7 +52,7 @@ class facebook_bot_view ( generic.View ):
         if 'message' in message:
           # Print the message to the terminal
           if ( messageIsGreeting ( message ) ):
-            user_profile = requests.get ( "https://graph.facebook.com/v2.6/"+message['sender']['id']+"?access_token=EAARBuHDd8IYBAEkyWKHpQCJDc3HCtJTnevmnxmrgXkVDDkDKIt88W3XZBT39QWEgaqw9QJao61ZCcCB5KkwBE2FZCPzZBY9FLppexOZAvlY8CRFAVa4wPg5ZBTZAdFEwYKoSLJ0D9jY3h7OjuGjzW2wkq9lyy0LLhdNV8dSsTdhYgZDZD" )
+            user_profile = requests.get ( 'https://graph.facebook.com/v2.6/' + message['sender']['id'] + '?access_token' + appkey.appkey )
             pprint(user_profile.json())
             post_facebook_message ( message['sender']['id'], "Hi there, " + user_profile.json()['first_name'] )
           else:
