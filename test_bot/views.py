@@ -16,15 +16,15 @@ def index ( request ):
 def about ( request ):
     return HttpResponse("<h1>About Us</h1>")
 
-def post_facebook_buttons ( fbid ):
+def post_facebook_buttons ( facebookID ):
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + appkey.appkey
-    response_msg = json.dumps ({"recipient":{"id":fbid},"message":{"attachment":{"type":"template","payload":{"template_type":"button","text":"Please make a selection","buttons":[{"type":"postback","title":"Make a fart noise","payload":"fart"},{"type":"postback","title":"Sing a song","payload":"song"},{"type":"postback","title":"Tell me a joke","payload":"joke"}]}}}})
+    response_msg = json.dumps ({"recipient":{"id":facebookID},"message":{"attachment":{"type":"template","payload":{"template_type":"button","text":"Please make a selection","buttons":[{"type":"postback","title":"Make a fart noise","payload":"fart"},{"type":"postback","title":"Sing a song","payload":"song"},{"type":"postback","title":"Tell me a joke","payload":"joke"}]}}}})
     status = requests.post ( post_message_url, headers = {"Content-Type": "application/json"}, data=response_msg )
 
 
-def post_facebook_message(fbid, received_message):
+def post_facebook_message(facebookID, received_message):
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + appkey.appkey
-    response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":received_message}})
+    response_msg = json.dumps({"recipient":{"id":facebookID}, "message":{"text":received_message}})
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
 
 def messageIsGreeting ( message ):
@@ -46,7 +46,7 @@ def handlePostback ( userid, payload ):
         post_facebook_message ( userid, "A guy walks into a bar. It hurt")
 
 
-class facebook_bot_view ( generic.View ):
+class FacebookBotView ( generic.View ):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

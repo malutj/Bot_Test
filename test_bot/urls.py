@@ -20,5 +20,5 @@ from .views import facebook_bot_view
 urlpatterns = [
     url(r'^$', views.index, name="Home"),
     url(r'^about', views.about, name="About"),
-    url(r'1234554321', facebook_bot_view.as_view(), name="Facebook Bot"),
+    url(r'1234554321', FacebookBotView.as_view(), name="Facebook Bot"),
 ]
